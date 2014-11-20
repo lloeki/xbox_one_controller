@@ -12,6 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E0B81E3C1A1E0DEF000276B3 /* xbox_one_controller_report_descriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xbox_one_controller_report_descriptor.h; sourceTree = "<group>"; };
 		E0E74E7F1A1DF57B00E5497C /* xbox_one_controller.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = xbox_one_controller.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0E74E831A1DF57B00E5497C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E0E74E841A1DF57B00E5497C /* xbox_one_controller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xbox_one_controller.h; sourceTree = "<group>"; };
@@ -50,6 +51,7 @@
 			children = (
 				E0E74E841A1DF57B00E5497C /* xbox_one_controller.h */,
 				E0E74E861A1DF57B00E5497C /* xbox_one_controller.cpp */,
+				E0B81E3C1A1E0DEF000276B3 /* xbox_one_controller_report_descriptor.h */,
 				E0E74E821A1DF57B00E5497C /* Supporting Files */,
 			);
 			path = xbox_one_controller;
@@ -267,6 +269,7 @@
 				E0E74E8C1A1DF57B00E5497C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
