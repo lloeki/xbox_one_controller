@@ -107,7 +107,7 @@ IOUSBDevice *com_lloeki_xbox_one_controller::findAndOpenDevice(IOService *provid
     IOLog("[xbox_one_controller] device @%08x opened: config=%d\n",
           device->GetLocationID(),
           descriptor->bConfigurationValue);
-    
+
     return device;
 }
 
@@ -119,7 +119,7 @@ IOUSBInterface *com_lloeki_xbox_one_controller::findAndOpenInterface(IOUSBDevice
     ifRequest.bInterfaceSubClass = 0x0047;
     ifRequest.bInterfaceProtocol = 0x00D0;
     ifRequest.bAlternateSetting  = kIOUSBFindInterfaceDontCare;
-    
+
     interface = device->FindNextInterface(NULL, &ifRequest);
     if (interface == NULL) { return NULL; }
     if (!interface->open(this)) { return NULL; }
@@ -146,7 +146,7 @@ IOUSBPipe *com_lloeki_xbox_one_controller::findAndOpenPipe(IOUSBInterface *inter
           pipe->GetDirection(),
           pipe->GetMaxPacketSize());
     pipe->retain();
-    
+
     return pipe;
 }
 
@@ -161,7 +161,7 @@ IOUSBDevice *com_lloeki_xbox_one_controller::findDevice() const
     if (device == NULL) {
         return NULL;
     }
-    
+
     return device;
 }
 
@@ -366,7 +366,7 @@ IOReturn com_lloeki_xbox_one_controller::newReportDescriptor(IOMemoryDescriptor 
 {
     IOLog("[xbox_one_controller] Descriptor\n");
     IOBufferMemoryDescriptor *buffer = IOBufferMemoryDescriptor::inTaskWithOptions(kernel_task,0,sizeof(xbox_one_controller_report_descriptor));
-    
+
     if (buffer == NULL) return kIOReturnNoResources;
 
     buffer->writeBytes(0, xbox_one_controller_report_descriptor,
@@ -401,12 +401,12 @@ OSString *com_lloeki_xbox_one_controller::newManufacturerString() const
     IOReturn err;
     char manufacturer[1024];
     UInt8 index = findDevice()->GetManufacturerStringIndex();
-    
+
     err = findDevice()->GetStringDescriptor(index, manufacturer, sizeof(manufacturer));
     if (err != kIOReturnSuccess) {
         manufacturer[0] = '\0';
     }
-    
+
     return OSString::withCString(manufacturer);
 }
 
@@ -415,7 +415,7 @@ OSString *com_lloeki_xbox_one_controller::newProductString() const
     IOReturn err;
     char product[1024];
     UInt8 index = findDevice()->GetProductStringIndex();
-    
+
     err = findDevice()->GetStringDescriptor(index, product, sizeof(product));
     if (err != kIOReturnSuccess) {
         product[0] = '\0';
@@ -447,13 +447,13 @@ OSNumber *com_lloeki_xbox_one_controller::newLocationIDNumber() const
 {
     OSNumber *number;
     UInt32 location_id;
-    
+
     number = OSDynamicCast(OSNumber, findDevice()->getProperty("locationID"));
     if (!number)
     {
         return 0;
     }
-    
+
     location_id = number->unsigned32BitValue();
     if (!location_id)
     {

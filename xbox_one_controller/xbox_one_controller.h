@@ -20,7 +20,7 @@ private:
     virtual void readComplete(IOBufferMemoryDescriptor *buffer, IOReturn status, UInt32 bufferSizeRemaining);
     static void writeCompleteProxy(void *target, void *parameter, IOReturn status, UInt32 bufferSizeRemaining);
     static void readCompleteProxy(void *target, void *parameter, IOReturn status, UInt32 bufferSizeRemaining);
-    
+
     virtual void processPacket(IOBufferMemoryDescriptor *buffer, UInt32 length);
 
     IOUSBDevice    *device;
@@ -35,9 +35,9 @@ public:
     virtual bool start(IOService *provider);
     virtual void stop(IOService *provider);
     virtual IOReturn message(UInt32 type, IOService* provider, void* argument);
-    
+
     virtual IOReturn newReportDescriptor(IOMemoryDescriptor **descriptor) const;
-    
+
     virtual OSNumber *newPrimaryUsagePageNumber() const;
     virtual OSNumber *newPrimaryUsageNumber() const;
     virtual OSNumber *newVendorIDNumber() const;
