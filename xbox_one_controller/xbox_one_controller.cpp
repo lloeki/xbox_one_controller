@@ -412,16 +412,7 @@ OSString *com_lloeki_xbox_one_controller::newManufacturerString() const
 
 OSString *com_lloeki_xbox_one_controller::newProductString() const
 {
-    IOReturn err;
-    char product[1024];
-    UInt8 index = findDevice()->GetProductStringIndex();
-
-    err = findDevice()->GetStringDescriptor(index, product, sizeof(product));
-    if (err != kIOReturnSuccess) {
-        product[0] = '\0';
-    }
-
-    return OSString::withCString(product);
+    return OSString::withCString("Xbox One Controller");
 }
 
 OSString *com_lloeki_xbox_one_controller::newSerialNumberString() const
