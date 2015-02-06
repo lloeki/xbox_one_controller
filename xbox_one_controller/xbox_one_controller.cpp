@@ -1,6 +1,7 @@
 #include <IOKit/IOLib.h>
 
 #include "xbox_one_controller.h"
+#include "xbox_one_controller_packet.h"
 #include "xbox_one_controller_report_descriptor.h"
 
 // This required macro defines the class's constructors, destructors,
@@ -170,6 +171,7 @@ void com_lloeki_xbox_one_controller::closeAll() {
     if (interface !=  NULL) { if (interface->isOpen()) { interface->close(this); } interface = NULL; }
     if (device != NULL) { if (device->isOpen()) { device->close(this); } device = NULL; }
 }
+
 
 /********************************************************************************************************/
 // Xbox One controller initialisation and communication
