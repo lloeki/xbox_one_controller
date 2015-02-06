@@ -322,15 +322,21 @@ IOReturn com_lloeki_xbox_one_controller::message(UInt32 type, IOService* provide
 
 void com_lloeki_xbox_one_controller::processPacket(IOBufferMemoryDescriptor *buffer, UInt32 length) {
     IOReturn err;
-    UInt8 *report = (UInt8 *)buffer->getBytesNoCopy();
+    xbox_one_controller_packet_head *packet = (xbox_one_controller_packet_head *)buffer->getBytesNoCopy();
 
-    if (report[0] == 0x20) {
+    if (packet->type == xbox_one_controller_packet_type_btn) {
+        //xbox_one_controller_packet_btn *btn_report = (xbox_one_controller_packet_btn *)packet;
         err = handleReport(buffer, kIOHIDReportTypeInput);
         if (err != kIOReturnSuccess) {
             IOLog("[xbox_one_controller] failed to handle report\n");
         }
     } else {
-        IOLog("[xbox_one_controller] unknown packet (length=%d): 0x%02x\n", length, report[0]);
+        UInt8 *raw_packet = (UInt8 *)packet;
+        IOLog("[xbox_one_controller] unknown packet type (buffer length=%d): 0x", length);
+        for (int i = 0; i < length; i++) {
+            IOLog("%02x", raw_packet[i]);
+        }
+        IOLog("\n");
     }
 }
 

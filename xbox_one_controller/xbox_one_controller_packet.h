@@ -13,7 +13,14 @@ enum xbox_one_controller_packet_type {
     xbox_one_controller_packet_type_btn = 0x20
 };
 
-typedef struct xbox_one_controller_packet {
+typedef struct xbox_one_controller_packet_head {
+    uint8_t  type; // packet type
+    uint8_t  unk;  // always 0x00?
+    uint8_t  seq;  // counter [0x00-0xff]
+    uint8_t  len;  // payload length
+} xbox_one_controller_packet_head;
+
+typedef struct xbox_one_controller_packet_btn {
     uint8_t  type; // packet type
     uint8_t  unk;  // always 0x00?
     uint8_t  seq;  // counter [0x00-0xff]
@@ -25,6 +32,6 @@ typedef struct xbox_one_controller_packet {
     int16_t  ly;   // LE [-0x8000:0x7fff]
     int16_t  rx;   // LE [-0x8000:0x7fff]
     int16_t  ry;   // LE [-0x8000:0x7fff]
-} xbox_one_controller_packet;
+} xbox_one_controller_packet_btn;
 
 #endif
