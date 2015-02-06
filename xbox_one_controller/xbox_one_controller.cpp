@@ -311,6 +311,10 @@ IOReturn com_lloeki_xbox_one_controller::message(UInt32 type, IOService* provide
             IOLog("[xbox_one_controller] message: wake up\n");
             writeInit(pipeOut);
             return kIOReturnSuccess;
+        case kIOMessageServiceIsTerminated:
+            IOLog("[xbox_one_controller] message: terminated\n");
+            closeAll();
+            return kIOReturnSuccess;
         default:
             return super::message(type, provider, argument);
     }
