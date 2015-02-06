@@ -327,10 +327,14 @@ IOReturn com_lloeki_xbox_one_controller::message(UInt32 type, IOService* provide
 void com_lloeki_xbox_one_controller::processPacket(IOBufferMemoryDescriptor *buffer, UInt32 length) {
     IOReturn err;
     UInt8 *raw_packet;
+    xbox_one_controller_packet_btn *btn_packet;
     xbox_one_controller_packet_head *packet = (xbox_one_controller_packet_head *)buffer->getBytesNoCopy();
 
     switch (packet->type) {
         case xbox_one_controller_packet_type_btn:
+            btn_packet = (xbox_one_controller_packet_btn *)packet;
+            btn_packet->ly = -(btn_packet->ly + 1);
+            btn_packet->ry = -(btn_packet->ry + 1);
         case xbox_one_controller_packet_type_x:
             err = handleReport(buffer, kIOHIDReportTypeInput);
             if (err != kIOReturnSuccess) {
