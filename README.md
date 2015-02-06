@@ -14,6 +14,14 @@ Gamepad pops up as a USB HID device, so it's readily usable by most games.
 
 This driver makes no attempt to emulate another gamepad and stays as true as possible to the hardware. Solutions abound to map joystick buttons, and game developers are expected to add support for this controller, as they already are for PS3, PS4, RumblePad... which already differ in significant ways. The only exception is that the driver does reverse vertical axes to match pre-cited common gamepads. Axes roles being arbitrary, they are made to match PS4. A possible future addition may be to add synthetic buttons on triggers in addition to trigger axes (similarly to what the PS4 controller does).
 
+## Where is button 1?
+
+That's the pairing button.
+
+## Where is button 2?
+
+There's none, but it may be used by an accessory or something.
+
 ## Bugs
 
 This driver is still rough on the edges.
