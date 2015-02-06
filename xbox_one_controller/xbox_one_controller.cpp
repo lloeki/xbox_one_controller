@@ -16,8 +16,8 @@ OSDefineMetaClassAndStructors(com_lloeki_xbox_one_controller, IOHIDDevice)
 #define super IOHIDDevice
 bool com_lloeki_xbox_one_controller::init(OSDictionary *dict)
 {
-    bool result = super::init(dict);
     IOLog("[xbox_one_controller] Initializing\n");
+    bool result = super::init(dict);
     lock = IOLockAlloc();
     return result;
 }
@@ -32,15 +32,15 @@ void com_lloeki_xbox_one_controller::free(void)
 IOService *com_lloeki_xbox_one_controller::probe(IOService *provider,
                                                  SInt32 *score)
 {
-    IOService *result = super::probe(provider, score);
     IOLog("[xbox_one_controller] Probing\n");
+    IOService *result = super::probe(provider, score);
     return result;
 }
 
 bool com_lloeki_xbox_one_controller::start(IOService *provider)
 {
-    bool result = super::start(provider);
     IOLog("[xbox_one_controller] Starting\n");
+    bool result = super::start(provider);
 
     device = findAndOpenDevice(provider);
     if (device == NULL) {
@@ -72,10 +72,14 @@ bool com_lloeki_xbox_one_controller::start(IOService *provider)
 
     if (!readInit(pipeIn)) {
         IOLog("[xbox_one_controller] Failed to queue first read\n");
+        closeAll();
+        return false;
     }
 
     if (!writeInit(pipeOut)) {
         IOLog("[xbox_one_controller] Failed to write init\n");
+        closeAll();
+        return false;
     }
 
     IOLog("[xbox_one_controller] Started\n");
@@ -88,8 +92,8 @@ void com_lloeki_xbox_one_controller::stop(IOService *provider)
     IOLog("[xbox_one_controller] Stopping\n");
     closeAll();
 
-    IOLog("[xbox_one_controller] Stopped\n");
     super::stop(provider);
+    IOLog("[xbox_one_controller] Stopped\n");
 }
 
 
@@ -178,8 +182,6 @@ void com_lloeki_xbox_one_controller::closeAll() {
 
 void com_lloeki_xbox_one_controller::writeCompleteProxy(void *target, void *parameter, IOReturn status, UInt32 bufferSizeRemaining)
 {
-    IOLog("[xbox_one_controller] data written (proxy)\n");
-
     if (target != NULL) {
         IOBufferMemoryDescriptor *buffer = (IOBufferMemoryDescriptor*)parameter;
         ((com_lloeki_xbox_one_controller*)target)->writeComplete(buffer, status);
@@ -190,8 +192,6 @@ void com_lloeki_xbox_one_controller::writeComplete(IOBufferMemoryDescriptor *buf
 {
     if (status != kIOReturnSuccess) {
         IOLog("[xbox_one_controller] write error: 0x%08x\n", status);
-    } else {
-        IOLog("[xbox_one_controller] data written\n");
     }
 
     if (buffer != NULL) { buffer->release(); }
@@ -199,8 +199,6 @@ void com_lloeki_xbox_one_controller::writeComplete(IOBufferMemoryDescriptor *buf
 
 void com_lloeki_xbox_one_controller::readCompleteProxy(void *target, void *parameter, IOReturn status, UInt32 bufferSizeRemaining)
 {
-    IOLog("[xbox_one_controller] incoming data (proxy)\n");
-
     if (target != NULL) {
         IOBufferMemoryDescriptor *buffer = (IOBufferMemoryDescriptor*)parameter;
         ((com_lloeki_xbox_one_controller*)target)->readComplete(buffer, status, bufferSizeRemaining);
@@ -209,7 +207,6 @@ void com_lloeki_xbox_one_controller::readCompleteProxy(void *target, void *param
 
 void com_lloeki_xbox_one_controller::readComplete(IOBufferMemoryDescriptor *buffer, IOReturn status, UInt32 bufferSizeRemaining)
 {
-    IOLog("[xbox_one_controller] incoming data\n");
     IOLockLock(lock);
 
     switch (status) {
@@ -221,7 +218,6 @@ void com_lloeki_xbox_one_controller::readComplete(IOBufferMemoryDescriptor *buff
             IOLog("[xbox_one_controller] read: not responding\n");
             break;
         case kIOReturnSuccess:
-            IOLog("[xbox_one_controller] read: success\n");
             processPacket(buffer, bufferSizeRemaining);
             break;
         default:
@@ -273,7 +269,6 @@ bool com_lloeki_xbox_one_controller::queueWrite(IOUSBPipe *pipe, const void *byt
         return false;
     }
 
-    IOLog("[xbox_one_controller] write queued: 0x%08x\n", err);
     return true;
 }
 
@@ -297,7 +292,6 @@ bool com_lloeki_xbox_one_controller::queueRead(IOUSBPipe *pipe) {
         return false;
     }
 
-    IOLog("[xbox_one_controller] read queued: 0x%08x\n", err);
     return true;
 }
 
@@ -335,18 +329,12 @@ void com_lloeki_xbox_one_controller::processPacket(IOBufferMemoryDescriptor *buf
             btn_packet = (xbox_one_controller_packet_btn *)packet;
             btn_packet->ly = -(btn_packet->ly + 1);
             btn_packet->ry = -(btn_packet->ry + 1);
+            // no break
         case xbox_one_controller_packet_type_x:
             err = handleReport(buffer, kIOHIDReportTypeInput);
             if (err != kIOReturnSuccess) {
                 IOLog("[xbox_one_controller] failed to handle report\n");
             }
-
-            IOLog("[xbox_one_controller] known packet (type=0x%02x, length=%d): 0x", packet->type, packet->len + 4);
-            raw_packet = (UInt8 *)packet;
-            for (int i = 0; i < (packet->len + 4); i++) {
-                IOLog("%02x", raw_packet[i]);
-            }
-            IOLog("\n");
             break;
         default:
             IOLog("[xbox_one_controller] unknown packet type (buffer length=%d): 0x", length);
