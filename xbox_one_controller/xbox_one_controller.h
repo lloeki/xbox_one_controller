@@ -11,6 +11,7 @@ private:
     virtual IOUSBInterface *findAndOpenInterface(IOUSBDevice *device);
     virtual IOUSBPipe *findAndOpenPipe(IOUSBInterface *interface, int direction);
     virtual void closeAll();
+
     virtual bool writeInit(IOUSBPipe *pipe);
     virtual bool readInit(IOUSBPipe *pipe);
     virtual bool queueWrite(IOUSBPipe *pipe, const void *bytes, UInt32 length);
@@ -20,6 +21,8 @@ private:
     static void writeCompleteProxy(void *target, void *parameter, IOReturn status, UInt32 bufferSizeRemaining);
     static void readCompleteProxy(void *target, void *parameter, IOReturn status, UInt32 bufferSizeRemaining);
     
+    virtual void processPacket(IOBufferMemoryDescriptor *buffer, UInt32 length);
+
     IOUSBDevice    *device;
     IOUSBInterface *interface;
     IOUSBPipe      *pipeIn;

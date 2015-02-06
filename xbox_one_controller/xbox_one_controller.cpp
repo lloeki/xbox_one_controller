@@ -210,7 +210,6 @@ void com_lloeki_xbox_one_controller::readComplete(IOBufferMemoryDescriptor *buff
     IOLog("[xbox_one_controller] incoming data\n");
     IOLockLock(lock);
 
-    void *report;
     switch (status) {
         case kIOReturnOverrun:
             IOLog("[xbox_one_controller] read: stalled\n");
@@ -221,7 +220,7 @@ void com_lloeki_xbox_one_controller::readComplete(IOBufferMemoryDescriptor *buff
             break;
         case kIOReturnSuccess:
             IOLog("[xbox_one_controller] read: success\n");
-            report = buffer->getBytesNoCopy();
+            processPacket(buffer, bufferSizeRemaining);
             break;
         default:
             IOLog("[xbox_one_controller] read: unhandled status\n");
@@ -299,6 +298,25 @@ bool com_lloeki_xbox_one_controller::queueRead(IOUSBPipe *pipe) {
     IOLog("[xbox_one_controller] read queued: 0x%08x\n", err);
     return true;
 }
+
+
+/********************************************************************************************************/
+// Processing
+
+void com_lloeki_xbox_one_controller::processPacket(IOBufferMemoryDescriptor *buffer, UInt32 length) {
+    IOReturn err;
+    UInt8 *report = (UInt8 *)buffer->getBytesNoCopy();
+
+    if (report[0] == 0x20) {
+        err = handleReport(buffer, kIOHIDReportTypeInput);
+        if (err != kIOReturnSuccess) {
+            IOLog("[xbox_one_controller] failed to handle report\n");
+        }
+    } else {
+        IOLog("[xbox_one_controller] unknown packet (length=%d): 0x%02x\n", length, report[0]);
+    }
+}
+
 
 /********************************************************************************************************/
 // HID descriptor
