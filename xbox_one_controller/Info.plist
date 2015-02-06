@@ -30,28 +30,28 @@
 			<string>com_lloeki_xbox_one_controller</string>
 			<key>IOKitDebug</key>
 			<integer>65535</integer>
-            <key>IOProviderClass</key>
-            <string>IOUSBDevice</string>
-            <key>idVendor</key>
-            <integer>1118</integer>
-            <key>idProduct</key>
-            <integer>721</integer>
+			<key>IOProviderClass</key>
+			<string>IOUSBDevice</string>
+			<key>idVendor</key>
+			<integer>1118</integer>
+			<key>idProduct</key>
+			<integer>721</integer>
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2014 lloeki. All rights reserved.</string>
-    <key>OSBundleLibraries</key>
-    <dict>
-        <key>com.apple.iokit.IOHIDFamily</key>
-        <string>2.0</string>
-        <key>com.apple.iokit.IOUSBFamily</key>
-        <string>705.4.14</string>
-        <key>com.apple.kpi.iokit</key>
-        <string>14.0</string>
-        <key>com.apple.kpi.libkern</key>
-        <string>14.0</string>
-        <key>com.apple.kpi.mach</key>
-        <string>14.0</string>
-    </dict>
+	<key>OSBundleLibraries</key>
+	<dict>
+		<key>com.apple.iokit.IOHIDFamily</key>
+		<string>2.0</string>
+		<key>com.apple.iokit.IOUSBFamily</key>
+		<string>705.4.14</string>
+		<key>com.apple.kpi.iokit</key>
+		<string>14.0</string>
+		<key>com.apple.kpi.libkern</key>
+		<string>14.0</string>
+		<key>com.apple.kpi.mach</key>
+		<string>14.0</string>
+	</dict>
 </dict>
 </plist>
