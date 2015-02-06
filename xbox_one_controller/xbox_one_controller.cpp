@@ -301,6 +301,21 @@ bool com_lloeki_xbox_one_controller::queueRead(IOUSBPipe *pipe) {
 
 
 /********************************************************************************************************/
+// Service events
+
+IOReturn com_lloeki_xbox_one_controller::message(UInt32 type, IOService* provider, void* argument) {
+    switch (type) {
+        case kIOMessageDeviceSignaledWakeup:
+            IOLog("[xbox_one_controller] message: wake up\n");
+            writeInit(pipeOut);
+            return kIOReturnSuccess;
+        default:
+            return super::message(type, provider, argument);
+    }
+}
+
+
+/********************************************************************************************************/
 // Processing
 
 void com_lloeki_xbox_one_controller::processPacket(IOBufferMemoryDescriptor *buffer, UInt32 length) {
