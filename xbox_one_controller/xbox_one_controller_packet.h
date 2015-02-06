@@ -10,6 +10,7 @@
 #define xbox_one_controller_xbox_one_controller_packet_h
 
 enum xbox_one_controller_packet_type {
+    xbox_one_controller_packet_type_x   = 0x07,
     xbox_one_controller_packet_type_btn = 0x20
 };
 
