@@ -42,8 +42,6 @@ This is by (Microsoft's) design. When the controller is unplugged, it starts loo
 
 ## Bugs
 
-This driver is still rough on the edges.
-
 Please report all bugs via [GitHub issues](https://github.com/lloeki/xbox_one_controller/issues).
 
 ## License
