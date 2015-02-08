@@ -2,21 +2,9 @@
 
 ## Installation
 
-Until I obtain an Apple Developer license and certificate (pending), the driver is unsigned and has to be installed with kext dev mode enabled on Yosemite.
+Obtain the driver from the [releases page](https://github.com/lloeki/xbox_one_controller/releases). Unzip then run `Install.command` and follow instructions.
 
-Obtain the driver from the [releases page](https://github.com/lloeki/xbox_one_controller/releases). Place it in `/Library/Extensions/` and make sure permissions and ownership are correct (IOW do not use the Finder to copy it).
-
-Easy way, in a terminal:
-
-```
-sudo nvram boot-args=kext-dev-mode=1                                # disable driver signature checks
-sudo kextunload /Library/Extensions/xbox_one_controller.kext        # just to be sure
-sudo rm -rf /Library/Extensions/xbox_one_controller.kext            # just to be sure, too
-sudo cp -R ~/Downloads/or/whatever/xbox_one_controller.kext /tmp    # this should set the ownership and permissions straight
-sudo cp -R /tmp/xbox_one_controller.kext /Library/Extensions        # third-party kexts are autoloaded from there on Yosemite
-```
-
-An installer automating those steps will be built soon.
+Note: until I obtain an Apple Developer license and certificate (pending), the driver is unsigned and has to be installed with kext dev mode enabled on Yosemite. The install script will inform you of this fact and will assist in setting the boot arguments.
 
 ## Usage
 
