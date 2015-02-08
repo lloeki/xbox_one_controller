@@ -14,8 +14,9 @@ function finish () {
 trap finish EXIT
 
 # check source
+source_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && echo "$PWD")"
 kext_name='xbox_one_controller.kext'
-kext_to_install="$(cd "$(dirname "${BASH_SOURCE[0]}")" && echo "$PWD")/$kext_name"
+kext_to_install="$source_dir/$kext_name"
 if [[ -d "$kext_to_install" ]]; then
     echo "I will install '$kext_to_install' into /Library/Extensions"
 else
@@ -56,5 +57,5 @@ sudo rm -rf /Library/Extensions/xbox_one_controller.kext
 # install
 echo "Installing new version..."
 sync
-sudo cp -R xbox_one_controller.kext /tmp
+sudo cp -R "$kext_to_install" /tmp
 sudo mv /tmp/xbox_one_controller.kext /Library/Extensions
