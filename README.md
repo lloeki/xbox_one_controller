@@ -75,6 +75,14 @@ This is by (Microsoft's) design. When the controller is unplugged, it starts loo
 
 It can't, as Xbox 360 and One controllers all use non-standard radio hardware.
 
+### How do I uninstall this?
+
+- Make sure that no controller is plugged
+- `sudo kextunload /Library/Extensions/xbox_one_controller.kext` (optional, as this gets unloaded automatically after some time)
+- `sudo rm -rf /Library/Extensions/xbox_one_controller.kext`
+- `sudo nvram boot-args=""` (but first make sure there are no other flags with `nvram boot-args`)
+- reboot
+
 ## Bugs
 
 Please report all bugs via [GitHub issues](https://github.com/lloeki/xbox_one_controller/issues).
