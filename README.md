@@ -4,7 +4,7 @@
 
 Obtain the driver from the [releases page](https://github.com/lloeki/xbox_one_controller/releases). Unzip, then run `Install.command` (right click, then choose 'Open') and follow instructions.
 
-Note: while I obtained an Apple Developer license and certificate, the driver is unsigned and has to be installed with kext dev mode enabled on Yosemite beacause Apple refuses to grant kext signing ability to random FOSS developers (see issue #2). The install script will inform you of this fact and will assist in setting the boot arguments.
+Note: while I obtained an Apple Developer license and certificate, the driver is unsigned and has to be installed with kext dev mode enabled on Yosemite beacause Apple refuses to grant kext signing ability to random FOSS developers (see [issue #2](https://github.com/lloeki/xbox_one_controller/issues/2)). The install script will inform you of this fact and will assist in setting the boot arguments.
 
 ## Usage
 
